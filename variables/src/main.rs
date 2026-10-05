@@ -33,4 +33,30 @@ fn main() {
     println!("There are {} seconds in an hour", SECONDS_IN_AN_HOUR);
     println!("There are {} seconds in a day", SECONDS_IN_A_DAY);
     println!("There are {} seconds in a week", SECONDS_IN_A_WEEK);
+
+    /*
+     * variable shadowing
+     * re-declaring a variable with the same name
+     * the new value shadows the old value
+     * while still keeping the variable immutable
+     * shadowing always creates a new variable, not a reference
+     * the shadowed variable can be of different data type than the original
+     */
+
+    let name = "John";
+    println!("The name is {name}");
+
+    {
+        let name = "Jane"; // shadows the outer `name` variable
+        println!("The name is {name}");
+    }
+
+    let name = "Henry"; // shadows the outer `name` variable
+    println!("The name is {name}");
+
+    let name = name.len(); // changed the data type of `name`
+    println!("The name length is {name}");
+
+    // name = "Bob"; // this will not compile and returns an error E0384
+    // the variable `name` is immutable and cannot be reassigned just
 }
