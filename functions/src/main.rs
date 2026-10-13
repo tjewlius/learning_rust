@@ -1,13 +1,11 @@
 fn main() {
-    println!("Hello, world!");
+    println!("The area of this rectangle is {}", area(15, 27));
 
-    println!("{}", another_function(90, "John"));
+    println!("{:?}", fee(1500));
 
-    let balance: i32 = 0;
+    let x = greet("Julio");
 
-    let status = if balance > 0 {"active"} else {"inactive"};
-
-    println!("{}", status)
+    println!("{x:?}");
 }
 
 /*
@@ -31,6 +29,18 @@ fn main() {
  * turns it into a statement
  */
 
-fn another_function(age: i8, name: &str) -> String {
-    format!("His name is {name} and he is {age} years old")
+fn area(width: u32, length: u32) -> u32 {
+    width * length
+}
+
+fn fee(transaction: i32) -> i32 {
+    if transaction > 10_000 {
+        transaction * 2 / 100
+    } else {
+        0
+    }
+}
+
+fn greet(name: &str) {
+    println!("Hello {name}!")
 }
