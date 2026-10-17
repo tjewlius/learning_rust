@@ -9,7 +9,7 @@
  *   transfer ownership through `Copy` trait i.e initial owner and new owner
  *   remain valid
  * - heap allocated values(Strings, Vec) ownership transfer is an expensive
- *   operation and all other types move by default where original owner is invalid 
+ *   operation and all other types move by default where original owner is invalid
  *   when ownership is tranferred.
  * - to keep the original owner valid for heap allocated data, we explicitly
  *   use .clone()
@@ -31,14 +31,24 @@ fn main() {
     let s = String::from("String here");
     string_ownership_check(s); // passing a value to a function also changes ownership
     // println!("{s}"); // this also returns error[E0382]
-    num_ownership_check(num1); // num1 is still valid here even after reassignment and 
-   // passing it to function as only it's copy is used 
+    num_ownership_check(num1); // num1 is still valid here even after reassignment and
+    // passing it to function as only it's copy is used
+
+    let t = String::from("This is a borrowed string");
+    borrowing_example(&t);
 }
 
 fn string_ownership_check(s: String) {
     println!("{s}");
 }
 
-fn num_ownership_check(num: i32){
+fn num_ownership_check(num: i32) {
     println!("{num}");
+}
+
+/*
+ * ==== BORROWING IN RUST ====
+ */
+fn borrowing_example(s: &String){
+    println!("{s}")
 }
