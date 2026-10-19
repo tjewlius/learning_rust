@@ -29,16 +29,20 @@ fn main() {
     // stack are reassigned by `Copy`
 
     let s = String::from("String here");
-    string_ownership_check(s); // passing a value to a function also changes ownership
+    string_ownership_check(&s); // passing a value to a function also changes ownership
     // println!("{s}"); // this also returns error[E0382]
     num_ownership_check(num1); // num1 is still valid here even after reassignment and
     // passing it to function as only it's copy is used
 
     let t = String::from("This is a borrowed string");
-    borrowing_example(&t);
+    // borrowing_example(&t);
+
+    println!("{t}");
+
+    // borrowing_example();
 }
 
-fn string_ownership_check(s: String) {
+fn string_ownership_check(s: &String) {
     println!("{s}");
 }
 
@@ -46,9 +50,25 @@ fn num_ownership_check(num: i32) {
     println!("{num}");
 }
 
-/*
- * ==== BORROWING IN RUST ====
- */
-fn borrowing_example(s: &String){
-    println!("{s}")
-}
+
+// fn borrowing_example(){
+//     let mut s = String::from("hello");
+
+//     {
+//         let m1 = &mut s;
+
+//         m1.push_str("aa");
+
+//         println!("{m1}")
+//     }
+
+//     let m2 = &mut s;
+//     m2.push_str("bb");
+
+//     println!("{m2}")
+// }
+
+// fn shouts(S: &mut String){
+//     s.push_str("!!!");
+//     s
+// }
