@@ -1,41 +1,44 @@
 fn main() {
+  // immutable Transaction instance
+  let transaction_test = Transaction {
+    id: 27,
+    amount: 22_500,
+    verified: true
+  };
 
-  // this is data(an instance of the Employee Struct)
-  // this is immutable by default
-  let employee_one = Employee {
-    name: String::from("Employee One"),
-    email: String::from("employee_one@company.com"),
-    avatar: String::from("ebac3a7570c013f55da056956f2e1e797c5af9a"),
+  println!("{:#?}", transaction_test);
+
+  let mut new_subscriber = Subscriber {
+    msisdn: String::from("+2567000000000"),
     active: true,
-    start_date: String::from("25-04-2020")
+    swap_count: 0
   };
 
-  // accessing struct values using dot notation
-  println!("{}", employee_one.name);
-  println!("{}", employee_one.email);
-  println!("{}", employee_one.avatar);
-  println!("{}", employee_one.active);
-  println!("{}", employee_one.start_date);
 
-  // employee two struct is mutable
-  let mut employee_two = Employee {
-    name: String::from("Employee Two"),
-    email: String::from("employee_two@company.com"),
-    ..employee_one // this transfers ownership of employee one data
-    // to employee two, from here employee_one.avatar would return an error
-    // active is still valid since it use the Copy trait
-  };
+  println!("{:#?}", new_subscriber);
 
-  println!("{}", employee_two.start_date);
+  flag_swap(&mut new_subscriber); // increment swap count
 
-  // mutate start date
-  employee_two.start_date = String::from("10-08-2023");
+  println!();
+  println!("{:#?}", new_subscriber);
+  println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+  println!("=================================================");
 
-  println!("{}", employee_two.start_date);
+  flag_swap(&mut new_subscriber); // increment swap count
 
-  // let employee_one_info = build_employee_work_info(String::from("finance"), String::from("Finance Assistant"),String::from("Jane Doe"));
+  println!();
+  println!("{:#?}", new_subscriber);
 
-  println!("{:?}", employee_two)
+  println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+  println!("=================================================");
+
+  flag_swap(&mut new_subscriber); // increment swap count
+
+  println!();
+  println!("{:#?}", new_subscriber);
+  println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+  println!("=================================================");
+  // println!("{}", new_subscriber.active);
 }
 
 /*
@@ -53,25 +56,29 @@ fn main() {
 
 // this is just a struct definition
 // it is not data, just defining the shape of the data
+
 #[derive(Debug)]
-struct Employee {
-  name: String,
-  email: String,
-  avatar: String,
+struct Transaction {
+  id: u64,
+  amount: u64,
+  verified: bool
+}
+
+#[derive(Debug)]
+struct Subscriber {
+  msisdn: String,
   active: bool,
-  start_date: String,
+  swap_count: u32
 }
 
-struct EmployeeWorkInfo {
-  department: String,
-  job_role: String,
-  line_manager: String
-}
+fn flag_swap(sub: &mut Subscriber) {
+  sub.swap_count += 1;
 
-fn build_employee_work_info(department: String, job_role: String, line_manager: String) -> EmployeeWorkInfo {
-  EmployeeWorkInfo {
-    department,
-    job_role,
-    line_manager
+  if sub.swap_count >= 3 {
+    sub.active = false;
   }
+}
+
+fn is_risky(swap_count: u32) -> bool {
+  swap_count > 2
 }
