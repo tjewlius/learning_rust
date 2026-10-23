@@ -33,11 +33,9 @@ fn main() {
 
   println!("{}", employee_two.start_date);
 
-  let employee_one_info = build_employee_work_info(String::from("finance"), String::from("Finance Assistant"),String::from("Jane Doe"));
+  // let employee_one_info = build_employee_work_info(String::from("finance"), String::from("Finance Assistant"),String::from("Jane Doe"));
 
-  println!("{}", employee_one_info.department);
-  println!("{}", employee_one_info.department);
-  println!("{}", employee_one_info.department)
+  println!("{:?}", employee_two)
 }
 
 /*
@@ -55,6 +53,7 @@ fn main() {
 
 // this is just a struct definition
 // it is not data, just defining the shape of the data
+#[derive(Debug)]
 struct Employee {
   name: String,
   email: String,
