@@ -15,30 +15,38 @@ fn main() {
   };
 
 
-  println!("{:#?}", new_subscriber);
+  // println!("{:#?}", new_subscriber);
 
-  flag_swap(&mut new_subscriber); // increment swap count
+  
 
-  println!();
-  println!("{:#?}", new_subscriber);
-  println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
-  println!("=================================================");
+  // println!();
+  // println!("{:#?}", new_subscriber);
+  // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+  // println!("=================================================");
 
-  flag_swap(&mut new_subscriber); // increment swap count
+  // flag_swap(&mut new_subscriber); // increment swap count
 
-  println!();
-  println!("{:#?}", new_subscriber);
+  // println!();
+  // println!("{:#?}", new_subscriber);
 
-  println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
-  println!("=================================================");
+  // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+  // println!("=================================================");
 
-  flag_swap(&mut new_subscriber); // increment swap count
+  // flag_swap(&mut new_subscriber); // increment swap count
 
-  println!();
-  println!("{:#?}", new_subscriber);
-  println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
-  println!("=================================================");
+  // println!();
+  // println!("{:#?}", new_subscriber);
+  // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+  // println!("=================================================");
   // println!("{}", new_subscriber.active);
+
+  for _ in 0..3 {
+    flag_swap(&mut new_subscriber);
+    println!("{:#?}", new_subscriber);
+    println!("{}", if is_risky(&new_subscriber) {"Risk level is High"} else {"Risk level is Low"});
+    println!("Subscribe status: {}", if new_subscriber.active { "Active" } else { "Deactivated" });
+    println!("=================================================");
+  }
 }
 
 /*
@@ -74,11 +82,12 @@ struct Subscriber {
 fn flag_swap(sub: &mut Subscriber) {
   sub.swap_count += 1;
 
-  if sub.swap_count >= 3 {
-    sub.active = false;
-  }
+  // if sub.swap_count >= 3 {
+  //   sub.active = false;
+  // }
+  sub.active = !(sub.swap_count >= 3);
 }
 
-fn is_risky(swap_count: u32) -> bool {
-  swap_count > 2
+fn is_risky(sub: &Subscriber) -> bool {
+  sub.swap_count >= 3
 }
