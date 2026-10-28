@@ -1,64 +1,84 @@
 fn main() {
-  // immutable Transaction instance
-  let transaction_test = Transaction {
-    id: 27,
-    amount: 22_500,
-    verified: true
-  };
+    // immutable Transaction instance
+    let transaction_test = Transaction {
+        id: 27,
+        amount: 22_500,
+        verified: true,
+    };
 
-  println!("{:#?}", transaction_test);
+    println!("{:#?}", transaction_test);
 
-  let mut new_subscriber = Subscriber {
-    msisdn: String::from("+2567000000000"),
-    active: true,
-    swap_count: 0
-  };
+    let mut new_subscriber = Subscriber {
+        msisdn: String::from("+2567000000000"),
+        active: true,
+        swap_count: 0,
+    };
 
+    // println!("{:#?}", new_subscriber);
 
-  // println!("{:#?}", new_subscriber);
+    // println!();
+    // println!("{:#?}", new_subscriber);
+    // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+    // println!("=================================================");
 
-  
+    // flag_swap(&mut new_subscriber); // increment swap count
 
-  // println!();
-  // println!("{:#?}", new_subscriber);
-  // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
-  // println!("=================================================");
+    // println!();
+    // println!("{:#?}", new_subscriber);
 
-  // flag_swap(&mut new_subscriber); // increment swap count
+    // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+    // println!("=================================================");
 
-  // println!();
-  // println!("{:#?}", new_subscriber);
+    // flag_swap(&mut new_subscriber); // increment swap count
 
-  // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
-  // println!("=================================================");
+    // println!();
+    // println!("{:#?}", new_subscriber);
+    // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
+    // println!("=================================================");
+    // println!("{}", new_subscriber.active);
 
-  // flag_swap(&mut new_subscriber); // increment swap count
+    for _ in 0..3 {
+        flag_swap(&mut new_subscriber);
+        println!("{:#?}", new_subscriber);
+        println!(
+            "{}",
+            if is_risky(&new_subscriber) {
+                "Risk level is High"
+            } else {
+                "Risk level is Low"
+            }
+        );
+        println!(
+            "Subscribe status: {}",
+            if new_subscriber.active {
+                "Active"
+            } else {
+                "Deactivated"
+            }
+        );
+        println!("=================================================");
+    }
 
-  // println!();
-  // println!("{:#?}", new_subscriber);
-  // println!("{}", if is_risky(new_subscriber.swap_count) {"This is risky"} else {"This is okay"});
-  // println!("=================================================");
-  // println!("{}", new_subscriber.active);
+    // println!("{}", check(Msisdn("0712345678"))) // this returns E0308 which is calling a function while passing
+    // an argument that has different from the declared function parameter
+    // 
+    // let new_user = TestSruct {
+    //     name: String::from("Name Passed")
+    // };
 
-  for _ in 0..3 {
-    flag_swap(&mut new_subscriber);
-    println!("{:#?}", new_subscriber);
-    println!("{}", if is_risky(&new_subscriber) {"Risk level is High"} else {"Risk level is Low"});
-    println!("Subscribe status: {}", if new_subscriber.active { "Active" } else { "Deactivated" });
-    println!("=================================================");
-  }
+    // println!("{}", new_user.name);
 }
 
 /*
  * ==== STRUCTS ====
  * a struct(structure) is a custom data type that is used to group multiple
  * related values
- * 
+ *
  * struct kekyword -> Struct name -> opening curly brace -> fields -> closing curly brace
- * 
+ *
  * structs are immutable by default as well and we use `mut` to create a mutable struct
  * mutability is on the struct, not per field
- * 
+ *
  * dot notation to access values of a struct
 */
 
@@ -67,27 +87,34 @@ fn main() {
 
 #[derive(Debug)]
 struct Transaction {
-  id: u64,
-  amount: u64,
-  verified: bool
+    id: u64,
+    amount: u64,
+    verified: bool,
 }
 
 #[derive(Debug)]
 struct Subscriber {
-  msisdn: String,
-  active: bool,
-  swap_count: u32
+    msisdn: String,
+    active: bool,
+    swap_count: u32,
+}
+
+struct Msisdn(String);
+
+// struct TestSruct {
+//     name: &str
+// }
+
+fn check(m: Msisdn) -> bool {
+    m.0.len() == 10 || m.0.len() == 12 || m.0.len() == 13
+    //0712345678 or 256712345678 or +256712345678
 }
 
 fn flag_swap(sub: &mut Subscriber) {
-  sub.swap_count += 1;
-
-  // if sub.swap_count >= 3 {
-  //   sub.active = false;
-  // }
-  sub.active = !(sub.swap_count >= 3);
+    sub.swap_count += 1;
+    sub.active = sub.swap_count < 3
 }
 
 fn is_risky(sub: &Subscriber) -> bool {
-  sub.swap_count >= 3
+    sub.swap_count >= 3
 }
