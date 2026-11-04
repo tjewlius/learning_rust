@@ -38,11 +38,12 @@ fn main() {
     // println!("{}", new_subscriber.active);
 
     for _ in 0..3 {
-        flag_swap(&mut new_subscriber);
+        new_subscriber.flag_swap();
+
         println!("{:#?}", new_subscriber);
         println!(
             "{}",
-            if is_risky(&new_subscriber) {
+            if new_subscriber.is_risky() {
                 "Risk level is High"
             } else {
                 "Risk level is Low"
@@ -99,22 +100,26 @@ struct Subscriber {
     swap_count: u32,
 }
 
+impl Subscriber {
+    fn flag_swap(&mut self) {
+        self.swap_count += 1;
+        self.active = self.swap_count < 3
+    }
+
+    fn is_risky(&self) -> bool {
+        self.swap_count >= 3
+    }
+}
+
 struct Msisdn(String);
 
 // struct TestSruct {
 //     name: &str
 // }
 
-fn check(m: Msisdn) -> bool {
-    m.0.len() == 10 || m.0.len() == 12 || m.0.len() == 13
-    //0712345678 or 256712345678 or +256712345678
-}
-
-fn flag_swap(sub: &mut Subscriber) {
-    sub.swap_count += 1;
-    sub.active = sub.swap_count < 3
-}
-
-fn is_risky(sub: &Subscriber) -> bool {
-    sub.swap_count >= 3
+impl Msisdn {
+    fn check(&self) -> bool {
+        self.0.len() == 10 || self.0.len() == 12 || self.0.len() == 13
+        //0712345678 or 256712345678 or +256712345678
+    }
 }
